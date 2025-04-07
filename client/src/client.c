@@ -1,4 +1,7 @@
 #include "client.h"
+#include <commons/log.h>
+#include <commons/config.h>
+#include <readline/readline.h>
 
 int main(void)
 {
@@ -18,17 +21,27 @@ int main(void)
 
 	// Usando el logger creado previamente
 	// Escribi: "Hola! Soy un log"
-
+	log_info(logger, "Hola! Soy un log.");
 
 	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
 
 	config = iniciar_config();
 
+	if(config == NULL) {
+		log_info(logger, "No se encontro el archivo de configuracion");
+		abort();		
+	}
+
 	// Usando el config creado previamente, leemos los valores del config y los 
 	// dejamos en las variables 'ip', 'puerto' y 'valor'
+	ip = config_get_string_value(config, "IP");
+	puerto = config_get_string_value(config,"PUERTO");
+	valor = config_get_string_value(config, "CLAVE");
 
 	// Loggeamos el valor de config
-
+	log_info(logger, ip);
+	log_info(logger, puerto);
+	log_info(logger, valor);
 
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
@@ -50,32 +63,37 @@ int main(void)
 
 	/*---------------------------------------------------PARTE 5-------------------------------------------------------------*/
 	// Proximamente
+
+	log_destroy(logger); //Destruyo la instacia del logger
+	config_destroy(config); //Destruyo la instancia del config
 }
 
 t_log* iniciar_logger(void)
 {
-	t_log* nuevo_logger;
+	t_log* nuevo_logger = log_create("tp0.log", "Log-tp0", true, LOG_LEVEL_INFO);
 
 	return nuevo_logger;
 }
 
 t_config* iniciar_config(void)
 {
-	t_config* nuevo_config;
+	t_config* nuevo_config = config_create("cliente.config");
 
 	return nuevo_config;
 }
 
 void leer_consola(t_log* logger)
 {
-	char* leido;
-
 	// La primera te la dejo de yapa
-	leido = readline("> ");
+	char* leido = readline("> ");
 
 	// El resto, las vamos leyendo y logueando hasta recibir un string vacío
-
-
+	while(!leido[0] == '\0') {
+		log_info(logger, leido);
+		free(leido);
+		leido = readline("> ");
+	}
+	
 	// ¡No te olvides de liberar las lineas antes de regresar!
 
 }
