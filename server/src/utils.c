@@ -31,7 +31,7 @@ int iniciar_servidor(void)
 		error_show("No se puedo setear el socket correctamente.");
 	}
 
-	err = bind(socket_servidor, server_info->ai_addr, server_info->ai_addrlen);
+	err = bind(socket_servidor, servinfo->ai_addr, servinfo->ai_addrlen);
 
 	if (err = -1)
 	{
