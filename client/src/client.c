@@ -69,7 +69,7 @@ int main(void)
 
 t_log *iniciar_logger(void)
 {
-	t_log *nuevo_logger = log_create("tp0.log", "Log-tp0", true, LOG_LEVEL_INFO);
+	t_log *nuevo_logger = log_create("cliente.log", "Log-cliente", true, LOG_LEVEL_INFO);
 
 	return nuevo_logger;
 }
