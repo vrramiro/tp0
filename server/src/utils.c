@@ -5,7 +5,7 @@ t_log *logger;
 int iniciar_servidor(void)
 {
 	// Quitar esta línea cuando hayamos terminado de implementar la funcion
-	//assert(!"no implementado!");
+	// assert(!"no implementado!");
 
 	int socket_servidor;
 
@@ -19,9 +19,9 @@ int iniciar_servidor(void)
 	getaddrinfo(NULL, PUERTO, &hints, &servinfo);
 
 	// Creamos el socket de escucha del servidor
-	socket_servidor = socket(server_info->ai_family,
-							 server_info->ai_socktype,
-							 server_info->ai_protocol);
+	socket_servidor = socket(servinfo->ai_family,
+							 servinfo->ai_socktype,
+							 servinfo->ai_protocol);
 
 	// Asociamos el socket a un puerto
 	err = setsockopt(socket_servidor, SOL_SOCKET, SO_REUSEPORT, &(int){1}, sizeof(int));
@@ -55,7 +55,7 @@ int iniciar_servidor(void)
 int esperar_cliente(int socket_servidor)
 {
 	// Quitar esta línea cuando hayamos terminado de implementar la funcion
-	//assert(!"no implementado!");
+	// assert(!"no implementado!");
 
 	// Aceptamos un nuevo cliente
 	int socket_cliente = accept(socket_servidor, NULL, NULL);
